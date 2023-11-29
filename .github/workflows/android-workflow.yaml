@@ -12,12 +12,6 @@ jobs:
 #    runs-on: ubuntu-latest
     runs-on: macos-latest
     steps:
-      - name: Enable Debugging
-        if: always()
-        run: |
-          sudo mkdir -p /var/log/runner
-          sudo touch /var/log/runner/debug.log
-          sudo tail -f /var/log/runner/debug.log
       - name: Checkout current repository in ubuntu's file system
         uses: actions/checkout@v1
       - name: Setup JDK 17
