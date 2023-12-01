@@ -11,6 +11,12 @@ jobs:
 #    runs-on: ubuntu-latest
     runs-on: macos-latest
     steps:
+      - name: Enable Debugging
+        if: always()
+        run: |
+          sudo mkdir -p /var/log/runner
+          sudo touch /var/log/runner/debug.log
+          sudo tail -f /var/log/runner/debug.log
       - name: Checkout current repository in ubuntu's file system
         uses: actions/checkout@v1
       - name: Setup JDK 17
@@ -37,6 +43,13 @@ jobs:
         with:
           name: reports
           path: app/build/reports
+      - name: Enable Debugging
+        if: always()
+        run: |
+          sudo mkdir -p /var/log/runner
+          sudo touch /var/log/runner/debug.log
+          sudo tail -f /var/log/runner/debug.log
+
 
   generate-apk:
     name: Generate apk
@@ -46,10 +59,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Setup JDK 1.8
+      - name: Setup JDK 17
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 17
 
       - name: Generate apk
         run: ./gradlew assembleDebug
